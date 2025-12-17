@@ -1,0 +1,59 @@
+
+<div class="register-container">
+    <div class="register-card">
+      <h2>Inscription</h2>
+      
+      <form (ngSubmit)="register()">
+        <div class="form-group">
+          <label for="name">Nom</label>
+          <input 
+            type="text" 
+            id="name" 
+            [(ngModel)]="name" 
+            name="name"
+            required
+            placeholder="Votre nom"
+          >
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            [(ngModel)]="email" 
+            name="email"
+            required
+            placeholder="votre@email.com"
+          >
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Mot de passe</label>
+          <input 
+            type="password" 
+            id="password" 
+            [(ngModel)]="password" 
+            name="password"
+            required
+            placeholder="••••••••"
+            minlength="6"
+          >
+        </div>
+  
+        <div *ngIf="error" class="error-message">
+          {{ error }}
+        </div>
+  
+        <button type="submit" [disabled]="loading" class="btn-primary">
+          <span *ngIf="!loading">S'inscrire</span>
+          <span *ngIf="loading">Inscription...</span>
+        </button>
+      </form>
+  
+      <p class="login-link">
+        Déjà un compte ? 
+        <a routerLink="/login">Se connecter</a>
+      </p>
+    </div>
+  </div>

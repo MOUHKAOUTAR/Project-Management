@@ -1,0 +1,113 @@
+<div class="tasks-container">
+  <header class="header">
+    <button (click)="goBack()" class="btn-back">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Retour
+    </button>
+    <h1>{{ project?.title || 'Tâches' }}</h1>
+  </header>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="actions">
+    <button (click)="showForm = !showForm" class="btn-primary">
+      {{ showForm ? 'Annuler' : '+ Nouvelle Tâche' }}
+    </button>
+  </div>
+
+  <div *ngIf="showForm" class="task-form">
+    <h3>Créer une nouvelle tâche</h3>
+    <form (ngSubmit)="createTask()">
+      <div class="form-group">
+        <label for="task-title">Titre *</label>
+        <input 
+          id="task-title"
+          type="text" 
+          [(ngModel)]="newTask.title" 
+          name="title"
+          required
+          placeholder="Titre de la tâche"
+        >
+      </div>
+      <div class="form-group">
+        <label for="task-description">Description</label>
+        <textarea 
+          id="task-description"
+          [(ngModel)]="newTask.description" 
+          name="description"
+          placeholder="Description de la tâche"
+          rows="3"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="task-duedate">Date d'échéance</label>
+        <input 
+          id="task-duedate"
+          type="datetime-local" 
+          [(ngModel)]="newTask.dueDate" 
+          name="dueDate"
+        >
+      </div>
+      <button type="submit" class="btn-primary">Créer</button>
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
+  </div>
+
+  <div class="tasks-list" *ngIf="!loading">
+    <div *ngFor="let task of tasks" class="task-card" [class.completed]="task.completed">
+      <div class="task-header">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            [checked]="task.completed"
+            (change)="toggleComplete(task)"
+          >
+          <span class="checkbox-custom"></span>
+          <span class="task-title">{{ task.title }}</span>
+        </label>
+        <button 
+          (click)="deleteTask(task.id!)" 
+          class="btn-delete"
+          aria-label="Supprimer la tâche"
+        >
+          ×
+        </button>
+      </div>
+      <p *ngIf="task.description" class="task-description">
+        {{ task.description }}
+      </p>
+      <div class="task-footer">
+        <span *ngIf="task.dueDate" class="due-date">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <rect x="2" y="3" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M5 1V4M11 1V4M2 6H14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          {{ task.dueDate | date:'short' }}
+        </span>
+        <span *ngIf="task.completed" class="completed-badge">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Terminée
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="tasks.length === 0" class="empty-state">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+      </svg>
+      <p class="empty-title">Aucune tâche pour le moment</p>
+      <p class="empty-subtitle">Créez votre première tâche pour commencer !</p>
+    </div>
+  </div>
+</div>

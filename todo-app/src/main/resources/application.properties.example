@@ -1,0 +1,14 @@
+spring.datasource.url=jdbc:postgresql://localhost:5432/YOUR_DATABASE_NAME
+spring.datasource.username=YOUR_USERNAME
+spring.datasource.password=YOUR_PASSWORD
+jwt.secret=YOUR_SECRET_KEY_CHANGE_THIS_IN_PRODUCTION
+
+spring.jpa.hibernate.ddl-auto=update   
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+server.port=8911
+# JWT Configuration
+# Generate a secure secret with: openssl rand -base64 64
+jwt.secret=YOUR_JWT_SECRET_KEY_HERE_CHANGE_THIS_IN_PRODUCTION
+jwt.expiration=86400000

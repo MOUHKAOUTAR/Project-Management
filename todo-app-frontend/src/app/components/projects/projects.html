@@ -1,0 +1,80 @@
+<div class="projects-container">
+  <header class="header">
+    <h1>Mes Projets</h1>
+    <button (click)="logout()" class="btn-logout">Déconnexion</button>
+  </header>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div class="actions">
+    <button (click)="showForm = !showForm" class="btn-primary">
+      {{ showForm ? 'Annuler' : '+ Nouveau Projet' }}
+    </button>
+  </div>
+
+  <div *ngIf="showForm" class="project-form">
+    <h3>Créer un nouveau projet</h3>
+    <form (ngSubmit)="createProject()">
+      <div class="form-group">
+        <label for="title">Titre *</label>
+        <input 
+          id="title"
+          type="text" 
+          [(ngModel)]="newProject.title" 
+          name="title"
+          required
+          placeholder="Titre du projet"
+        >
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea 
+          id="description"
+          [(ngModel)]="newProject.description" 
+          name="description"
+          placeholder="Description du projet"
+          rows="3"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn-primary">Créer</button>
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement...</p>
+  </div>
+
+  <div class="projects-grid" *ngIf="!loading">
+    <div *ngFor="let project of projects" class="project-card">
+      <div class="project-header">
+        <h3>{{ project.title }}</h3>
+        <button 
+          (click)="deleteProject(project.id!)" 
+          class="btn-delete"
+          aria-label="Supprimer le projet"
+        >
+          ×
+        </button>
+      </div>
+      <p *ngIf="project.description" class="project-description">
+        {{ project.description }}
+      </p>
+      <div class="project-footer">
+        <button (click)="viewTasks(project.id!)" class="btn-view-tasks">
+          Voir les tâches
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="projects.length === 0" class="empty-state">
+      <svg class="empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      <p class="empty-title">Aucun projet pour le moment</p>
+      <p class="empty-subtitle">Créez votre premier projet pour commencer !</p>
+    </div>
+  </div>
+</div>
