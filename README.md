@@ -374,8 +374,8 @@ Contributions are welcome! If you'd like to improve this project:
 
 **Kaoutar MOUH**
 
-📧 Email: kaoutarmouh7@gmail.com  
-💼 GitHub: [@yourusername](https://github.com/MOUH KAOUTAR)
+📧 **Email**: kaoutarmouh7@gmail.com  
+💼 **GitHub**: [MOUH KAOUTAR](https://github.com/MOUH-KAOUTAR)
 
 ---
 
